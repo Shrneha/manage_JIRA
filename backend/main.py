@@ -20,8 +20,8 @@ def helloworld():
 # API to generate reports
 @app.route('/fetch_issues', methods=['POST', 'GET'])
 def consumption_reports():
-    """Shows basic usage of the Sheets API.
-    Print values from a sample spreadsheet.
+    """
+        Fetches issues latest issues from project board
     """
 
 
@@ -42,11 +42,17 @@ def consumption_reports():
         auth=auth
     )
     data = json.loads(response.text)
-    print(type(data))
-    return(data["issues"][0]["fields"]["summary"])
+    issues = data["issues"]
+
+    # Create list of issues from dashboard
+    summary_list = []
+    for each_issue in range(len(issues)):
+        summary_list.append(data["issues"][each_issue]["fields"]["summary"])
+
+    return summary_list
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001, debug=True, threaded=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)
 
 
