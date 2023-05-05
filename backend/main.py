@@ -30,9 +30,6 @@ def consumption_reports():
         "Content-Type": "application/json",
     }
 
-    query = {
-        'jql': 'project=TTS'
-    }
     auth = HTTPBasicAuth(username, jira_API_token)
 
     response=requests.request(
