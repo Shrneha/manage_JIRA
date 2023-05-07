@@ -6,3 +6,9 @@ username="shraddha.bhuran31@gmail.com"
 DB_CONNECTION_URL = "mongodb+srv://shraddhabhuran31:w4EgJHtVCTp8nyed@jiradata.zqvrr78.mongodb.net/?retryWrites=true&w=majority"
 cluster_username ="shraddhabhuran31"
 pwd = "w4EgJHtVCTp8nyed"
+
+# JIRA status Update URL
+STATUS_UPDT_URL = "https://shrneha.atlassian.net/rest/api/3/issue/TJA-3/transitions"
+headers = {
+        "Accept": "application/json",
+    }

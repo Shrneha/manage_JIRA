@@ -62,7 +62,7 @@ def helloworld():
 
 # API to generate reports
 @app.route('/fetch_issues', methods=['POST', 'GET'])
-def consumption_reports():
+def get_issues():
     """
         Fetches issues latest issues from project board
     """
@@ -98,6 +98,50 @@ def consumption_reports():
         )
 
     return data
+
+# API to update status with comment
+@app.route('/update_status', methods=['POST','GET'])
+def update_status():
+    """
+        Updates status of tickets from project board
+        Adds comments
+    """
+
+    # Authenticate jira and fetch API data
+    response = jira_authentication()
+
+    # Define payload
+    payload = json.dumps(
+        {
+            "update": {
+                "comment": [
+                    {
+                        "add": {
+                            "body": "Bug has been fixed."
+                        }
+                    }
+                ]
+            },
+            "transition": {
+                "id": "5"
+            }
+        }
+    )
+
+    # update response
+    auth = HTTPBasicAuth(username, jira_API_token)
+
+    response = requests.request(
+        'POST',
+        STATUS_UPDT_URL,
+        headers=headers,
+        data=payload,
+        auth=auth
+    )
+    print(response.text)
+    status = {"status": 200}
+    return status
+
 
 
 if __name__ == '__main__':
