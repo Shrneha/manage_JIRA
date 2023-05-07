@@ -2,5 +2,7 @@ jira_API_token ="ATATT3xFfGF0e3mor4HG_JLxYJ6zhIUzmu4RBF3ni90ueaWQGbFDzwVCJuRBQCJ
 jira_project_board_url="https://shrneha.atlassian.net/rest/api/3/search"
 username="shraddha.bhuran31@gmail.com"
 
+# Mongodb
+DB_CONNECTION_URL = "mongodb+srv://shraddhabhuran31:w4EgJHtVCTp8nyed@jiradata.zqvrr78.mongodb.net/?retryWrites=true&w=majority"
 cluster_username ="shraddhabhuran31"
 pwd = "w4EgJHtVCTp8nyed"
