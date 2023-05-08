@@ -107,6 +107,14 @@ def update_status():
         Adds comments
     """
 
+    # fetch data from frontend
+    comment = "comment updated with python script"
+    ticket_number = "TJA-4"
+
+    # Create status update and comment URL
+    status_url = STATUS_UPDT_URL.replace("TICKET_NUMBER", ticket_number)
+    comment_url = COMMENT_UPDT_URL.replace("TICKET_NUMBER", ticket_number)
+
     # Define payload
     """
         Status ID 11 - To Do
@@ -116,7 +124,7 @@ def update_status():
     status_payload = json.dumps(
         {
             "transition": {
-                "id": "31"
+                "id": "21"
             }
         }
     )
@@ -128,7 +136,7 @@ def update_status():
                     {
                         "content": [
                             {
-                                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.",
+                                "text": comment,
                                 "type": "text"
                             }
                         ],
@@ -146,7 +154,7 @@ def update_status():
 
     response = requests.request(
         "POST",
-        STATUS_UPDT_URL,
+        status_url,
         data=status_payload,
         headers=headers,
         auth=auth
@@ -161,7 +169,7 @@ def update_status():
     # Post comment
     comment_response = requests.request(
         "POST",
-        COMMENT_UPDT_URL,
+        comment_url,
         data=comment_payload,
         headers=headers,
         auth=auth

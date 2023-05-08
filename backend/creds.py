@@ -8,8 +8,8 @@ cluster_username ="shraddhabhuran31"
 pwd = "w4EgJHtVCTp8nyed"
 
 # JIRA status Update URL
-STATUS_UPDT_URL = "https://shrneha.atlassian.net/rest/api/3/issue/TJA-3/transitions"
-COMMENT_UPDT_URL = "https://shrneha.atlassian.net/rest/api/3/issue/TJA-3/comment"
+STATUS_UPDT_URL = "https://shrneha.atlassian.net/rest/api/3/issue/TICKET_NUMBER/transitions"
+COMMENT_UPDT_URL = "https://shrneha.atlassian.net/rest/api/3/issue/TICKET_NUMBER/comment"
 
 headers = {
     "Accept": "application/json",
