@@ -14,7 +14,7 @@ try:
     conn_url = DB_CONNECTION_URL
     client = pymongo.MongoClient(conn_url)
     print("connected to mongodb")
-except pymongo.error.ConfigurationError as e:
+except pymongo.errors.ConfigurationError as e:
     print("An Invalid URI host error was received. Is your Atlas host name correct in your connection string?")
     sys.exit(1)
 
@@ -107,23 +107,36 @@ def update_status():
         Adds comments
     """
 
-    # Authenticate jira and fetch API data
-    response = jira_authentication()
-
     # Define payload
-    payload = json.dumps(
+    """
+        Status ID 11 - To Do
+        Status ID 21 - In Progress
+        Status ID 31 - Done
+    """
+    status_payload = json.dumps(
         {
-            "update": {
-                "comment": [
-                    {
-                        "add": {
-                            "body": "Bug has been fixed."
-                        }
-                    }
-                ]
-            },
             "transition": {
-                "id": "5"
+                "id": "31"
+            }
+        }
+    )
+
+    comment_payload = json.dumps(
+        {
+            "body": {
+                "content": [
+                    {
+                        "content": [
+                            {
+                                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.",
+                                "type": "text"
+                            }
+                        ],
+                        "type": "paragraph"
+                    }
+                ],
+                "type": "doc",
+                "version": 1
             }
         }
     )
@@ -132,16 +145,33 @@ def update_status():
     auth = HTTPBasicAuth(username, jira_API_token)
 
     response = requests.request(
-        'POST',
+        "POST",
         STATUS_UPDT_URL,
+        data=status_payload,
         headers=headers,
-        data=payload,
         auth=auth
     )
-    print(response.text)
-    status = {"status": 200}
-    return status
 
+    # Send appropriate response
+    if not response:
+        data = json.loads(response.text)
+    else:
+        data = {"Status": 204}
+
+    # Post comment
+    comment_response = requests.request(
+        "POST",
+        COMMENT_UPDT_URL,
+        data=comment_payload,
+        headers=headers,
+        auth=auth
+    )
+    comment_details = json.loads(comment_response.text)
+
+    # Add comment details response to status response
+    data.update(comment_details)
+
+    return data
 
 
 if __name__ == '__main__':

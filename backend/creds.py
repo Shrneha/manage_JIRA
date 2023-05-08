@@ -9,6 +9,9 @@ pwd = "w4EgJHtVCTp8nyed"
 
 # JIRA status Update URL
 STATUS_UPDT_URL = "https://shrneha.atlassian.net/rest/api/3/issue/TJA-3/transitions"
+COMMENT_UPDT_URL = "https://shrneha.atlassian.net/rest/api/3/issue/TJA-3/comment"
+
 headers = {
-        "Accept": "application/json",
-    }
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+}
