@@ -10,30 +10,6 @@ import sys
 app = Flask(__name__)
 
 
-try:
-    conn_url = DB_CONNECTION_URL
-    client = pymongo.MongoClient(conn_url)
-    print("connected to mongodb")
-except pymongo.errors.ConfigurationError as e:
-    print("An Invalid URI host error was received. Is your Atlas host name correct in your connection string?")
-    sys.exit(1)
-
-# use a database named "myDatabase"
-db = client.myDatabase
-
-# use a collection named "recipes"
-my_collection = db["Tickets"]
-
-# drop the collection in case it already exists
-try:
-    my_collection.drop()
-    print("existing collection is deleted")
-    # return a friendly error if an authentication error is thrown
-except pymongo.errors.OperationFailure:
-    print("An authentication error was received. Are your username and password correct in your connection string?")
-    sys.exit(1)
-
-
 def jira_authentication():
     """
     Ensures Jira authentication
@@ -66,6 +42,28 @@ def get_issues():
     """
         Fetches issues latest issues from project board
     """
+    try:
+        conn_url = DB_CONNECTION_URL
+        client = pymongo.MongoClient(conn_url)
+        print("connected to mongodb")
+    except pymongo.errors.ConfigurationError as e:
+        print("An Invalid URI host error was received. Is your Atlas host name correct in your connection string?")
+        sys.exit(1)
+
+    # use a database named "myDatabase"
+    db = client.myDatabase
+
+    # use a collection named "recipes"
+    my_collection = db["Tickets"]
+
+    # drop the collection in case it already exists
+    try:
+        my_collection.drop()
+        print("existing collection is deleted")
+        # return a friendly error if an authentication error is thrown
+    except pymongo.errors.OperationFailure:
+        print("An authentication error was received. Are your username and password correct in your connection string?")
+        sys.exit(1)
 
     # Authenticate jira and fetch API data
     response = jira_authentication()
@@ -108,8 +106,9 @@ def update_status():
     """
 
     # fetch data from frontend
-    comment = "comment updated with python script"
-    ticket_number = "TJA-4"
+    comment = request.json["comment"]
+    ticket_number = request.json["number"]
+    status_id = request.json["id"]
 
     # Create status update and comment URL
     status_url = STATUS_UPDT_URL.replace("TICKET_NUMBER", ticket_number)
@@ -124,7 +123,7 @@ def update_status():
     status_payload = json.dumps(
         {
             "transition": {
-                "id": "21"
+                "id": status_id
             }
         }
     )
