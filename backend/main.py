@@ -6,6 +6,9 @@ from flask_cors import CORS
 import pymongo
 from requests.auth import HTTPBasicAuth
 import sys
+from pymongo import MongoClient
+from bson.json_util import dumps
+
 
 app = Flask(__name__)
 
@@ -31,6 +34,7 @@ def jira_authentication():
     # except error as e:
     #     print("Jira authentication error")
 
+
 @app.route('/')
 def helloworld():
     return "Hello World !"
@@ -53,7 +57,7 @@ def get_issues():
     # use a database named "myDatabase"
     db = client.myDatabase
 
-    # use a collection named "recipes"
+    # use a collection name Tickets
     my_collection = db["Tickets"]
 
     # drop the collection in case it already exists
@@ -95,7 +99,20 @@ def get_issues():
              }
         )
 
-    return data
+    # Fetch data from mongodb in json format
+    cursor = my_collection.find({})
+
+    # Converting cursor to the list of dictionaries
+    list_cur = list(cursor)
+    # print(list_cur)
+    # Converting to the JSON
+    json_data = dumps(list_cur, indent = 2)
+    # print(json_data)
+    # Writing data to file data.json
+    with open('data.json', 'w') as file:
+        file.write(json_data)
+
+    return json_data
 
 # API to update status with comment
 @app.route('/update_status', methods=['POST','GET'])
