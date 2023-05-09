@@ -18,26 +18,31 @@ const FetchAPIUrl = 'http://127.0.0.1:5000/fetch_issues'
 
 const Tickets = () => {
     const [jiraData, setJiraData] = useState([])
-
+    const [todoData, setTodoData]= useState([])
 
     const fetchTickets = async () => {
         const {data} = await Axios.get(FetchAPIUrl)
-        console.log("data",data)
+        //console.log("data",data)
+        
+        // clone an array 
+        const issues = [...data];
+        console.log("issues",issues[0])
 
-        const {tickets} = {data};
-        console.log("tickets",tickets)
+        setTodoData(...issues)
+        console.log("todoData",todoData)
 
-        // const allTickets = tickets.map(ticket => ({
-        //     issues: ticket.issues,
-        //     number: ticket.number,
-        //     description: ticket.description,
-        //     reporter: ticket.reporter,
-        //     status: ticket.status,
-        //     due_date:ticket.due_date,
-        //     story_points:ticket.story_points
-        // }));
+        const allTickets = issues.map(issue => ({
+            issues: issue.issues,
+            number: issue.number,
+            description: issue.description,
+            reporter: issue.reporter,
+            status: issue.status,
+            due_date:issue.due_date,
+            story_points:issue.story_points
+        }));
 
-        setJiraData(tickets);
+        setJiraData(allTickets);
+
 
     };
 
@@ -50,13 +55,14 @@ const Tickets = () => {
         <Container>
             <Row>
                 {jiraData.map(jiraData => (
-                <Col md={8} key={jiraData.number}>
+                <Col md={4} key={jiraData.number}>
+                
                     <Card className="mt-2 mb-1">
                         <CardBody>
-                            <CardTitle>TITLE</CardTitle>
+                            <CardTitle>{jiraData.number}</CardTitle>
                             <Button 
                                 color="success"
-                                >View
+                                >{jiraData.status}
                             </Button>
                         </CardBody>
                     </Card>

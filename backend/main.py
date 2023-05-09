@@ -99,17 +99,27 @@ def get_issues():
              }
         )
 
-    # Fetch data from mongodb in json format
-    cursor = my_collection.find({})
+    final_data = list()
 
-    # Converting cursor to the list of dictionaries
-    list_cur = list(cursor)
+    # Fetch to do status data from mongodb in json format and convert cursor into list
+    cursor = my_collection.find({"status": "To Do"})
+    todo_list = list(cursor)
+    todo_data = {"key": "To Do", "data": json.loads(dumps(todo_list, indent=2))}
+    final_data.append(todo_data)
 
-    # Converting to the JSON
-    json_data = dumps(list_cur, indent = 2)
+    # Fetch In Progress status data from mongodb in json format
+    cursor = my_collection.find({"status": "In Progress"})
+    progress_list = list(cursor)
+    progress_data = {"key": "In Progress", "data": json.loads(dumps(progress_list, indent=2))}
+    final_data.append(progress_data)
 
+    # Fetch Done status data from mongodb in json format
+    cursor = my_collection.find({"status": "Done"})
+    done_list = list(cursor)
+    done_data = {"key": "Done", "data": json.loads(dumps(done_list, indent=2))}
+    final_data.append(done_data)
 
-    return json_data
+    return final_data
 
 
 # API to update status with comment
