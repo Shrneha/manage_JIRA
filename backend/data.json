@@ -1,0 +1,86 @@
+[
+  {
+    "_id": {
+      "$oid": "645a2ec40bae736b56739b39"
+    },
+    "issues": "Setup backend database",
+    "number": "TJA-9",
+    "description": "Description- Setup backend database",
+    "reporter": "Shraddha Bhuran",
+    "status": "To Do",
+    "due_date": "2023-05-16",
+    "story_points": 1.0
+  },
+  {
+    "_id": {
+      "$oid": "645a2ec40bae736b56739b3a"
+    },
+    "issues": "backend API to update status of tickets via API",
+    "number": "TJA-7",
+    "description": "Description - backend API to update status of tickets via API",
+    "reporter": "Shraddha Bhuran",
+    "status": "To Do",
+    "due_date": "2023-05-10",
+    "story_points": 3.0
+  },
+  {
+    "_id": {
+      "$oid": "645a2ec50bae736b56739b3b"
+    },
+    "issues": "frontend code to check if any ticket is updated",
+    "number": "TJA-6",
+    "description": "Description- frontend code to check if any ticket is updated",
+    "reporter": "Shraddha Bhuran",
+    "status": "To Do",
+    "due_date": "2023-05-15",
+    "story_points": 1.0
+  },
+  {
+    "_id": {
+      "$oid": "645a2ec50bae736b56739b3c"
+    },
+    "issues": "write frontend code to show fetched tickets",
+    "number": "TJA-5",
+    "description": "Description-write frontend code to show fetched tickets",
+    "reporter": "Shraddha Bhuran",
+    "status": "To Do",
+    "due_date": "2023-05-09",
+    "story_points": 4.0
+  },
+  {
+    "_id": {
+      "$oid": "645a2ec50bae736b56739b3d"
+    },
+    "issues": "Create 1st API to fetch tickets from project board",
+    "number": "TJA-4",
+    "description": "Description-Create 1st API to fetch tickets from project board",
+    "reporter": "Shraddha Bhuran",
+    "status": "In Progress",
+    "due_date": "2023-05-24",
+    "story_points": 5.0
+  },
+  {
+    "_id": {
+      "$oid": "645a2ec50bae736b56739b3e"
+    },
+    "issues": "create credentials for api connection",
+    "number": "TJA-3",
+    "description": "Description-create credentials for api connection",
+    "reporter": "Shraddha Bhuran",
+    "status": "Done",
+    "due_date": "2023-05-25",
+    "story_points": 2.0
+  },
+  {
+    "_id": {
+      "$oid": "645a2ec50bae736b56739b3f"
+    },
+    "issues": "Create Home page in React",
+    "number": "TJA-1",
+    "description": null,
+    "reporter": "Shraddha Bhuran",
+    "status": "Done",
+    "due_date": "2023-05-22",
+    "story_points": 3.0
+  }
+]
