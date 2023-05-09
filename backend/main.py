@@ -104,15 +104,13 @@ def get_issues():
 
     # Converting cursor to the list of dictionaries
     list_cur = list(cursor)
-    # print(list_cur)
+
     # Converting to the JSON
     json_data = dumps(list_cur, indent = 2)
-    # print(json_data)
-    # Writing data to file data.json
-    with open('data.json', 'w') as file:
-        file.write(json_data)
+
 
     return json_data
+
 
 # API to update status with comment
 @app.route('/update_status', methods=['POST','GET'])
