@@ -99,27 +99,27 @@ def get_issues():
              }
         )
 
-    final_data = list()
+    # final_data = list()
 
     # Fetch to do status data from mongodb in json format and convert cursor into list
-    cursor = my_collection.find({"status": "To Do"})
+    cursor = my_collection.find({})
     todo_list = list(cursor)
-    todo_data = {"key": "To Do", "data": json.loads(dumps(todo_list, indent=2))}
-    final_data.append(todo_data)
+    todo_data = json.loads(dumps(todo_list, indent=2))
+    # final_data.append(todo_data)
 
-    # Fetch In Progress status data from mongodb in json format
-    cursor = my_collection.find({"status": "In Progress"})
-    progress_list = list(cursor)
-    progress_data = {"key": "In Progress", "data": json.loads(dumps(progress_list, indent=2))}
-    final_data.append(progress_data)
+    # # Fetch In Progress status data from mongodb in json format
+    # cursor = my_collection.find({"status": "In Progress"})
+    # progress_list = list(cursor)
+    # progress_data = {"key": "In Progress", "data": json.loads(dumps(progress_list, indent=2))}
+    # final_data.append(progress_data)
+    #
+    # # Fetch Done status data from mongodb in json format
+    # cursor = my_collection.find({"status": "Done"})
+    # done_list = list(cursor)
+    # done_data = {"key": "Done", "data": json.loads(dumps(done_list, indent=2))}
+    # final_data.append(done_data)
 
-    # Fetch Done status data from mongodb in json format
-    cursor = my_collection.find({"status": "Done"})
-    done_list = list(cursor)
-    done_data = {"key": "Done", "data": json.loads(dumps(done_list, indent=2))}
-    final_data.append(done_data)
-
-    return final_data
+    return todo_data
 
 
 # API to update status with comment

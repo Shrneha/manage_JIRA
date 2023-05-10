@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
-import { Container } from "reactstrap";
+import { Container,Table } from "reactstrap";
 import {
     Card,
     CardImg,
@@ -12,12 +12,14 @@ import {
     Row, Col
 } from "reactstrap";
 import Axios from "axios";
+import { KanbanComponent, ColumnsDirective, ColumnDirective } from "@syncfusion/ej2-react-kanban";
+
+
 
 const FetchAPIUrl = 'http://127.0.0.1:5000/fetch_issues'
 
 
 const Tickets = () => {
-    const [jiraData, setJiraData] = useState([])
     const [todoData, setTodoData]= useState([])
 
     const fetchTickets = async () => {
@@ -26,13 +28,11 @@ const Tickets = () => {
         
         // clone an array 
         const issues = [...data];
-        console.log("issues",issues[0])
-
-        setTodoData(...issues)
-        console.log("todoData",todoData)
+        console.log("issues",issues);
+        
 
         const allTickets = issues.map(issue => ({
-            issues: issue.issues,
+            issues : issue.issues,
             number: issue.number,
             description: issue.description,
             reporter: issue.reporter,
@@ -41,7 +41,7 @@ const Tickets = () => {
             story_points:issue.story_points
         }));
 
-        setJiraData(allTickets);
+        setTodoData(allTickets);
 
 
     };
@@ -53,22 +53,49 @@ const Tickets = () => {
 
     return (
         <Container>
-            <Row>
-                {jiraData.map(jiraData => (
-                <Col md={4} key={jiraData.number}>
-                
+        <div className="row">
+        <div className="span6">
+            <Col>
+                <h4>To Do
+                </h4>          
+                {todoData.filter(record =>record.status === "To Do").map((issue,id) => (
+                <Row md={4} key={issue.number}>    
                     <Card className="mt-2 mb-1">
                         <CardBody>
-                            <CardTitle>{jiraData.number}</CardTitle>
+                            <CardTitle>{issue.number}</CardTitle>
                             <Button 
                                 color="success"
-                                >{jiraData.status}
+                                key={issue.id}
+                                >{issue.status}
                             </Button>
                         </CardBody>
                     </Card>
-                </Col>
+                </Row>
                 ))}
-            </Row>
+            </Col>
+        </div>
+        <div className="span6"> 
+            <Col>
+            <Row md={4}>Done
+                </Row>           
+                {todoData.filter(record =>record.status === "Done").map((issue,id) => (
+                <Row md={4} key={issue.number}>    
+                    <Card className="mt-2 mb-1">
+                        <CardBody>
+                            <CardTitle>{issue.number}</CardTitle>
+                            <Button 
+                                color="success"
+                                key={issue.id}
+                                >{issue.status}
+                            </Button>
+                        </CardBody>
+                    </Card>
+                </Row>
+            ))}
+
+            </Col>
+            </div> 
+        </div>
         </Container>
     )
 
