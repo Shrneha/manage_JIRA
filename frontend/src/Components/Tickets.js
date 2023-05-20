@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
-import { Container,Table } from "reactstrap";
 import {
+    Container,
+    Table,
     Card,
     CardImg,
     CardText,
@@ -53,14 +54,13 @@ const Tickets = () => {
 
     return (
         <Container>
-        <div className="row">
-        <div className="span6">
-            <Col>
-                <h4>To Do
-                </h4>          
+            <Row> 
+            <Col style={{margin: '10px'}}>
+            <h4>To Do</h4> 
+                   
                 {todoData.filter(record =>record.status === "To Do").map((issue,id) => (
-                <Row md={4} key={issue.number}>    
-                    <Card className="mt-2 mb-1">
+                <Row key={issue.number}>    
+                    <Card>
                         <CardBody>
                             <CardTitle>{issue.number}</CardTitle>
                             <Button 
@@ -72,15 +72,12 @@ const Tickets = () => {
                     </Card>
                 </Row>
                 ))}
-            </Col>
-        </div>
-        <div className="span6"> 
-            <Col>
-            <Row md={4}>Done
-                </Row>           
+            </Col> 
+            <Col style={{margin: '10px'}}>
+            <h4>Done</h4>          
                 {todoData.filter(record =>record.status === "Done").map((issue,id) => (
-                <Row md={4} key={issue.number}>    
-                    <Card className="mt-2 mb-1">
+                <Row key={issue.number}>    
+                    <Card>
                         <CardBody>
                             <CardTitle>{issue.number}</CardTitle>
                             <Button 
@@ -92,10 +89,25 @@ const Tickets = () => {
                     </Card>
                 </Row>
             ))}
-
             </Col>
-            </div> 
-        </div>
+            <Col style={{margin: '10px'}}>
+            <h4>In Progress</h4>          
+                {todoData.filter(record =>record.status === "In Progress").map((issue,id) => (
+                <Row key={issue.number}>    
+                    <Card>
+                        <CardBody>
+                            <CardTitle>{issue.number}</CardTitle>
+                            <Button 
+                                color="success"
+                                key={issue.id}
+                                >{issue.status}
+                            </Button>
+                        </CardBody>
+                    </Card>
+                </Row>
+            ))}
+            </Col>
+            </Row>
         </Container>
     )
 
