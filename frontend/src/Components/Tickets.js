@@ -8,22 +8,45 @@ import {
     CardImg,
     CardText,
     CardTitle,
-    Button,
     CardBody,
     Row, Col
 } from "reactstrap";
 import Axios from "axios";
-import { KanbanComponent, ColumnsDirective, ColumnDirective } from "@syncfusion/ej2-react-kanban";
+//import ViewModal from "./ViewModal";
+import { Form } from "react-bootstrap";
+// import Button from 'react-bootstrap/Button';
+// import Modal from 'react-bootstrap/Modal';
+import styled, { css } from 'styled-components';
 
 
+const Button = styled.button`
+    min-width: 100px;
+    padding: 16px 32px;
+    border-radius: 4px;
+    border: none;
+    background: #141414;
+    color: #fff;
+    cursor:pointer;
+    font-size: 24px;
+`;
 
 const FetchAPIUrl = 'http://127.0.0.1:5000/fetch_issues'
 
 
-const Tickets = () => {
-    const [todoData, setTodoData]= useState([])
+function Tickets() {
+    const [todoData, setTodoData]= useState([]);
+    const [modalShow, setModalShow] = useState(false);
+
+    const toggleModal = () => {
+        setModalShow(!modalShow);
+    };
+
+    // const handleClose = () => {setModalShow(false);};
+    // const handleShow = () => {setModalShow(true);};
 
     const fetchTickets = async () => {
+
+        
         const {data} = await Axios.get(FetchAPIUrl)
         //console.log("data",data)
         
@@ -44,13 +67,17 @@ const Tickets = () => {
 
         setTodoData(allTickets);
 
-
     };
+
+    
 
     useEffect(() => {
         fetchTickets()
     }, [])
 
+   
+
+    
 
     return (
         <Container>
@@ -97,17 +124,26 @@ const Tickets = () => {
                     <Card>
                         <CardBody>
                             <CardTitle>{issue.number}</CardTitle>
-                            <Button 
-                                color="success"
-                                key={issue.id}
-                                >{issue.status}
-                            </Button>
+                                <Button 
+                                    className="btn-modal"
+                                    color="success"
+                                    key={issue.id}
+                                    onClick={toggleModal}
+                                    >{issue.status}  
+                                </Button>
                         </CardBody>
                     </Card>
                 </Row>
             ))}
             </Col>
             </Row>
+            <Container>
+            <Button>click here
+            </Button>
+            
+            </Container>
+           
+          
         </Container>
     )
 
