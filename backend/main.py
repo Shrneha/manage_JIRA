@@ -11,6 +11,8 @@ from bson.json_util import dumps
 
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 def jira_authentication():

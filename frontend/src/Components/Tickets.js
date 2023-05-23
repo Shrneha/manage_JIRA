@@ -12,6 +12,10 @@ import {
 } from "reactstrap";
 import Axios from "axios";
 import Card from 'react-bootstrap/Card';
+import Modal from 'react-bootstrap/Modal';
+import ViewModal from "./ViewModal";
+
+
 
 
 const FetchAPIUrl = 'http://127.0.0.1:5000/fetch_issues'
@@ -21,15 +25,11 @@ function Tickets() {
     const [todoData, setTodoData]= useState([]);
     const [modalShow, setModalShow] = useState(false);
 
-    const toggleModal = () => {
-        setModalShow(!modalShow);
-    };
-
-    // const handleClose = () => {setModalShow(false);};
-    // const handleShow = () => {setModalShow(true);};
+   
+    const handleClose = () => setModalShow(false);
+    const handleShow = () => setModalShow(true);
 
     const fetchTickets = async () => {
-
         
         const {data} = await Axios.get(FetchAPIUrl)
         //console.log("data",data)
@@ -109,11 +109,17 @@ function Tickets() {
                                     className="btn-modal"
                                     color="success"
                                     key={issue.id}
-                                    onClick={toggleModal}
+                                    onClick={handleShow}
                                     >{issue.status}  
                                 </Button>
                         </CardBody>
                     </Card>
+                    <ViewModal 
+                        show={modalShow} 
+                        onHide={handleClose}
+                        todos= {issue} 
+                    />
+                    
                 </Row>
             ))}
             </Col>
@@ -127,40 +133,3 @@ function Tickets() {
 
 
 export default Tickets;
-
-// <Col style={{margin: '10px'}}>
-//             <h4>Done</h4>          
-//                 {todoData.filter(record =>record.status === "Done").map((issue,id) => (
-//                 <Row key={issue.number}>    
-//                     <Card>
-//                         <CardBody>
-//                             <CardTitle>{issue.number}</CardTitle>
-//                             <Button 
-//                                 color="success"
-//                                 key={issue.id}
-//                                 >{issue.status}
-//                             </Button>
-//                         </CardBody>
-//                     </Card>
-//                 </Row>
-//             ))}
-//             </Col>
-//             <Col style={{margin: '10px'}}>
-//             <h4>In Progress</h4>          
-//                 {todoData.filter(record =>record.status === "In Progress").map((issue,id) => (
-//                 <Row key={issue.number}>    
-//                     <Card>
-//                         <CardBody>
-//                             <CardTitle>{issue.number}</CardTitle>
-//                                 <Button 
-//                                     className="btn-modal"
-//                                     color="success"
-//                                     key={issue.id}
-//                                     onClick={toggleModal}
-//                                     >{issue.status}  
-//                                 </Button>
-//                         </CardBody>
-//                     </Card>
-//                 </Row>
-//             ))}
-//             </Col>
