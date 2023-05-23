@@ -1,12 +1,11 @@
 import requests
 import json
 from creds import *
-from flask import Flask, jsonify, request, json
+from flask import Flask, request, json
 from flask_cors import CORS
 import pymongo
 from requests.auth import HTTPBasicAuth
 import sys
-from pymongo import MongoClient
 from bson.json_util import dumps
 
 
