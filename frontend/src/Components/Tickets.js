@@ -24,10 +24,17 @@ const FetchAPIUrl = 'http://127.0.0.1:5000/fetch_issues'
 function Tickets() {
     const [todoData, setTodoData]= useState([]);
     const [modalShow, setModalShow] = useState(false);
+    const [card, setCard] = useState([])
 
    
     const handleClose = () => setModalShow(false);
-    const handleShow = () => setModalShow(true);
+    // const handleShow = (todo,id) => {
+        
+    //     console.log("todo",todo);
+    //     setCard(todo);
+    //     console.log("card",card);
+    //     setModalShow(true);
+    // }
 
     const fetchTickets = async () => {
         
@@ -36,10 +43,10 @@ function Tickets() {
         
         // clone an array 
         const issues = [...data];
-        console.log("issues",issues);
+        //console.log("issues",issues);
         
 
-        const allTickets = issues.map(issue => ({
+        const allTickets = issues.map((issue,id) => ({
             issues : issue.issues,
             number: issue.number,
             description: issue.description,
@@ -53,73 +60,134 @@ function Tickets() {
 
     };
 
-    
-
     useEffect(() => {
         fetchTickets()
-    }, [])
+    }, []);
+
+    // // Call API endpoint
+    // function getModalData(id) {
+    //     fetch(FetchAPIUrl, { 
+    //         method: 'POST', 
+    //         headers: { 
+    //             'Content-type' : 'application/json',
+    //             'Access-Control-Allow-Origin': '*',
+    //             'Accept': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             "id":id["todo"]["number"]
+    //         }) 
+            
+    //     })
+    //     .then(response => {response.json(); 
+    //         setCard({response});
+    //         console.log("card",card)
+    //     })
+
+          
+    //   };
+    const getModalData = async (id) => {
+        
+        const {data} = await Axios.post(FetchAPIUrl,{
+                        "id":id["todo"]["number"]}) 
+        //console.log("data",data)
+        
+        // clone an array 
+        const filtered_issues = [...data];
+        //console.log("issues",issues);
+        
+
+        const allTickets = filtered_issues.map((issue,id) => ({
+            issues : issue.issues,
+            number: issue.number,
+            description: issue.description,
+            reporter: issue.reporter,
+            status: issue.status,
+            due_date:issue.due_date,
+            story_points:issue.story_points
+        }));
+
+        setCard(allTickets);
+        console.log("card",card)
+        setModalShow(true);
+
+    };
+
 
        
-
     return (
         <Container>
             <Row> 
             <Col style={{margin: '10px'}}>
             <h4>To Do</h4>                  
-                {todoData.filter(record =>record.status === "To Do").map((issue,id) => (
-                <Row key={issue.number}>    
-                    <Card style={{ width: '18rem' , color:'black'}}>
+                {todoData.filter(todo =>todo.status === "To Do").map((todo,id) => (
+                <Row key={todo.number}>    
+                    <Card>
                         <CardBody>
-                            <CardTitle>{issue.number}</CardTitle>
-                            <Button 
-                                color="success"
-                                key={issue.id}
-                                >{issue.status}
-                            </Button>
+                            <CardTitle>{todo.number}</CardTitle>
+                                <Button 
+                                    className="btn-modal"
+                                    color="success"
+                                    key={todo.id}
+                                    onClick={() => getModalData({todo,id})}
+                                    >{todo.status}  
+    
+                                    <ViewModal 
+                                        show={modalShow} 
+                                        onHide={handleClose}
+                                        todos= {card} 
+                                    />   
+                                </Button>
                         </CardBody>
-                    </Card>
+                    </Card> 
                 </Row>
                 ))}
             </Col> 
             <Col style={{margin: '10px'}}>
-            <h4>Done</h4>          
-                {todoData.filter(record =>record.status === "Done").map((issue,id) => (
-                <Row key={issue.number}>    
+            <h4>In Progress</h4>          
+                {todoData.filter(record =>record.status === "In Progress").map((todo,id) => (
+                <Row key={todo.number}>    
                     <Card>
                         <CardBody>
-                            <CardTitle>{issue.number}</CardTitle>
-                            <Button 
-                                color="success"
-                                key={issue.id}
-                                >{issue.status}
-                            </Button>
+                            <CardTitle>{todo.number}</CardTitle>
+                                <Button 
+                                    className="btn-modal"
+                                    color="success"
+                                    key={todo.id}
+                                  
+                                    >{todo.status}  
+                                </Button>
                         </CardBody>
-                    </Card>
+                    
+                    <ViewModal 
+                        show={modalShow} 
+                        onHide={handleClose}
+                        todos= {todo} 
+                    /> 
+                    </Card>   
                 </Row>
             ))}
             </Col>
             <Col style={{margin: '10px'}}>
-            <h4>In Progress</h4>          
-                {todoData.filter(record =>record.status === "In Progress").map((issue,id) => (
-                <Row key={issue.number}>    
+            <h4>Done</h4>          
+                {todoData.filter(record =>record.status === "Done").map((todo,id) => (
+                <Row key={todo.number}>    
                     <Card>
                         <CardBody>
-                            <CardTitle>{issue.number}</CardTitle>
+                            <CardTitle>{todo.number}</CardTitle>
                                 <Button 
                                     className="btn-modal"
                                     color="success"
-                                    key={issue.id}
-                                    onClick={handleShow}
-                                    >{issue.status}  
+                                    key={todo.id}
+                                    
+                                    >{todo.status}  
                                 </Button>
-                        </CardBody>
-                    </Card>
-                    <ViewModal 
-                        show={modalShow} 
-                        onHide={handleClose}
-                        todos= {issue} 
-                    />
-                    
+                            </CardBody>
+                            <ViewModal 
+                                show={modalShow} 
+                                onHide={handleClose}
+                                todos= {todo} 
+                            />                                
+                    </Card>                  
                 </Row>
             ))}
             </Col>
