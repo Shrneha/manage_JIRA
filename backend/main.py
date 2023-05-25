@@ -1,16 +1,17 @@
 import requests
 import json
 from creds import *
-from flask import Flask, jsonify, request, json
+from flask import Flask, request, json
 from flask_cors import CORS
 import pymongo
 from requests.auth import HTTPBasicAuth
 import sys
-from pymongo import MongoClient
 from bson.json_util import dumps
 
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 def jira_authentication():
@@ -53,6 +54,7 @@ def get_issues():
     except pymongo.errors.ConfigurationError as e:
         print("An Invalid URI host error was received. Is your Atlas host name correct in your connection string?")
         sys.exit(1)
+
 
     # use a database named "myDatabase"
     db = client.myDatabase
@@ -99,31 +101,26 @@ def get_issues():
              }
         )
 
-    # final_data = list()
+    # If Its GET request then fetch all data
+    if request.method == "GET":
 
-    # Fetch to do status data from mongodb in json format and convert cursor into list
-    cursor = my_collection.find({})
-    todo_list = list(cursor)
-    todo_data = json.loads(dumps(todo_list, indent=2))
-    # final_data.append(todo_data)
+        # Fetch to do status data from mongodb in json format and convert cursor into list
+        cursor = my_collection.find({})
+        todo_list = list(cursor)
+        todo_data = json.loads(dumps(todo_list, indent=2))
 
-    # # Fetch In Progress status data from mongodb in json format
-    # cursor = my_collection.find({"status": "In Progress"})
-    # progress_list = list(cursor)
-    # progress_data = {"key": "In Progress", "data": json.loads(dumps(progress_list, indent=2))}
-    # final_data.append(progress_data)
-    #
-    # # Fetch Done status data from mongodb in json format
-    # cursor = my_collection.find({"status": "Done"})
-    # done_list = list(cursor)
-    # done_data = {"key": "Done", "data": json.loads(dumps(done_list, indent=2))}
-    # final_data.append(done_data)
+    else:
+        id = request.json["id"]
+
+        # Fetch FILTERED to do status data from mongodb in json format and convert cursor into list
+        cursor = my_collection.find({"number": id})
+        todo_data = json.loads(dumps(cursor, indent=2))
 
     return todo_data
 
 
 # API to update status with comment
-@app.route('/update_status', methods=['POST','GET'])
+@app.route('/update_status', methods=['POST', 'GET'])
 def update_status():
     """
         Updates status of tickets from project board
