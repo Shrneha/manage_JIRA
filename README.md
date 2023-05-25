@@ -1,4 +1,4 @@
-
+Jira Board 
 
 Goal: Manage Jira tickets using Python API
 
@@ -30,7 +30,14 @@ Screen Shots:
 
 <img width="1438" alt="Screenshot 2023-05-25 at 5 28 57 PM" src="https://github.com/Shrneha/manage_JIRA/assets/51981339/fefc787f-4073-4a69-ba6c-df87b2a43f4c">
 
-<img width="1440" alt="Screenshot 2023-05-25 at 5 31 30 PM" src="https://github.com/Shrneha/manage_JIRA/assets/51981339/1dfa617a-109e-45c6-b1fe-55f7abfe2e42">
+
+<img width="1440" alt="Screenshot 2023-05-25 at 5 34 33 PM" src="https://github.com/Shrneha/manage_JIRA/assets/51981339/94352c05-d516-4a54-83dd-254b8617f1ea">
+
+3. After changing status, page reloads and we can see changed ticket status on board. 
+
+<img width="1440" alt="Screenshot 2023-05-25 at 5 36 35 PM" src="https://github.com/Shrneha/manage_JIRA/assets/51981339/c2fa22d9-9e9c-4aa2-bca0-39bcb5cf0cf5">
+
+
 
 
 
