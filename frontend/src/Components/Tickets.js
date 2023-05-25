@@ -14,7 +14,7 @@ import Axios from "axios";
 import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
 import ViewModal from "./ViewModal";
-
+import {AiOutlineReload} from 'react-icons/ai';
 
 
 
@@ -96,9 +96,15 @@ function Tickets() {
     };
 
 
-       
     return (
+       
         <Container>
+        <div>
+            <Button color="primary">
+                <AiOutlineReload 
+                onClick={() => {window.location.reload(true); }}>Refresh</AiOutlineReload>
+                </Button>
+        </div>
             <Row> 
             <Col style={{margin: '10px'}}>
             <h4>To Do</h4>                  
@@ -133,7 +139,7 @@ function Tickets() {
                                     className="btn-modal"
                                     color="success"
                                     key={todo.id}  
-                                    //onClick={()=>{getModalData(todo) }}                             
+                                    onClick={()=>{getModalData(todo) }}                             
                                     >{todo.status}  
                                 </Button>
                         </CardBody>
@@ -152,7 +158,7 @@ function Tickets() {
                                     className="btn-modal"
                                     color="success"
                                     key={todo.id}
-                                    //onClick={()=>{getModalData(todo) }}                             
+                                    onClick={()=>{getModalData(todo) }}                             
                                     >{todo.status}  
                                 </Button>
                             </CardBody>
@@ -172,10 +178,8 @@ function Tickets() {
                 />  
 
                 )
-            }
+            }       
             
-            
-          
         </Container>
     )
 

@@ -48,7 +48,9 @@ function ViewModal(props) {
         })
         .then(response => {response.json();
             props.onHide(); // Close Modal on submit
-            console.log(response)})
+            console.log(response)
+            window.location.reload(true);
+        })
           
       };
 
@@ -64,20 +66,21 @@ function ViewModal(props) {
             </Modal.Header>
             <Modal.Body>
                 <h5>Description: </h5>
-                <p>{props.todos[0]?.description}</p>
+                <p>{props.todos[0].description}</p>
                 <h5>Due Date: </h5>
-                <p>{props.todos[0]?.due_date}</p>
+                <p>{props.todos[0].due_date}</p>
                 <h5>Reporter: </h5>
-                <p>{props.todos[0]?.reporter}</p>
+                <p>{props.todos[0].reporter}</p>
                 <h5>Current status: </h5>
-                <p>{props.todos[0]?.status}</p>
+                <p>{props.todos[0].status}</p>
                 <h5><label htmlFor="status">Change Status:</label></h5>
                 <select 
                     name="status" 
-                    value={formData.status || ""}
+                    value={formData.status || ""} 
                     onChange={handleInputChange} 
                 >
-                    <option value="11">TO DO</option>
+                    <option value="">Select Status</option>
+                    <option value="11" >TO DO</option>
                     <option value="21">IN PROGRESS</option>
                     <option value="31">DONE</option>
                 </select>

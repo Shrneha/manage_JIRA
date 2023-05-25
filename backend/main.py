@@ -111,12 +111,10 @@ def get_issues():
 
     else:
         id = request.json["id"]
-        print(id)
 
         # Fetch FILTERED to do status data from mongodb in json format and convert cursor into list
         cursor = my_collection.find({"number": id})
         todo_data = json.loads(dumps(cursor, indent=2))
-        print(todo_data)
 
     return todo_data
 
