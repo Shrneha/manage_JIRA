@@ -115,9 +115,9 @@ def get_issues():
 
         # Fetch FILTERED to do status data from mongodb in json format and convert cursor into list
         cursor = my_collection.find({"number": id})
-        todo_list = list(cursor)
-        todo_data = json.loads(dumps(todo_list, indent=2))
+        todo_data = json.loads(dumps(cursor, indent=2))
         print(todo_data)
+
     return todo_data
 
 

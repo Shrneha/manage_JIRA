@@ -24,7 +24,7 @@ const FetchAPIUrl = 'http://127.0.0.1:5000/fetch_issues'
 function Tickets() {
     const [todoData, setTodoData]= useState([]);
     const [modalShow, setModalShow] = useState(false);
-    const [card, setCard] = useState([])
+    const [card, setCard] = useState();
 
    
     const handleClose = () => setModalShow(false);
@@ -64,52 +64,35 @@ function Tickets() {
         fetchTickets()
     }, []);
 
-    // // Call API endpoint
-    // function getModalData(id) {
-    //     fetch(FetchAPIUrl, { 
-    //         method: 'POST', 
-    //         headers: { 
-    //             'Content-type' : 'application/json',
-    //             'Access-Control-Allow-Origin': '*',
-    //             'Accept': 'application/json'
-    //         },
-    //         body: JSON.stringify({
-    //             "id":id["todo"]["number"]
-    //         }) 
-            
-    //     })
-    //     .then(response => {response.json(); 
-    //         setCard({response});
-    //         console.log("card",card)
-    //     })
-
-          
-    //   };
-    const getModalData = async (id) => {
+   
+    // Fetch modal data with API
+    const getModalData = async(todo) => {
+        console.log("todo",todo["number"])
         
         const {data} = await Axios.post(FetchAPIUrl,{
-                        "id":id["todo"]["number"]}) 
-        //console.log("data",data)
+                        "id":todo["number"]}) 
+        
         
         // clone an array 
-        const filtered_issues = [...data];
-        //console.log("issues",issues);
+        const filtered_issues = data;
+        console.log("filtered_issues",data);
         
 
-        const allTickets = filtered_issues.map((issue,id) => ({
-            issues : issue.issues,
-            number: issue.number,
-            description: issue.description,
-            reporter: issue.reporter,
-            status: issue.status,
-            due_date:issue.due_date,
-            story_points:issue.story_points
+        const tickets = filtered_issues.map(ticket => ({
+            issues : ticket.issues,
+            number: ticket.number,
+            description: ticket.description,
+            reporter: ticket.reporter,
+            status: ticket.status,
+            due_date:ticket.due_date,
+            story_points:ticket.story_points
         }));
+        console.log("tickets",tickets)
 
-        setCard(allTickets);
-        console.log("card",card)
+        setCard(tickets);
         setModalShow(true);
-
+        
+       
     };
 
 
@@ -128,23 +111,20 @@ function Tickets() {
                                     className="btn-modal"
                                     color="success"
                                     key={todo.id}
-                                    onClick={() => getModalData({todo,id})}
+                                    onClick={() => {getModalData(todo) }}
                                     >{todo.status}  
-    
-                                    <ViewModal 
-                                        show={modalShow} 
-                                        onHide={handleClose}
-                                        todos= {card} 
-                                    />   
+                                   
                                 </Button>
+                        
                         </CardBody>
                     </Card> 
                 </Row>
                 ))}
+                
             </Col> 
             <Col style={{margin: '10px'}}>
             <h4>In Progress</h4>          
-                {todoData.filter(record =>record.status === "In Progress").map((todo,id) => (
+                {todoData.filter(todo =>todo.status === "In Progress").map((todo,id) => (
                 <Row key={todo.number}>    
                     <Card>
                         <CardBody>
@@ -152,24 +132,18 @@ function Tickets() {
                                 <Button 
                                     className="btn-modal"
                                     color="success"
-                                    key={todo.id}
-                                  
+                                    key={todo.id}  
+                                    //onClick={()=>{getModalData(todo) }}                             
                                     >{todo.status}  
                                 </Button>
                         </CardBody>
-                    
-                    <ViewModal 
-                        show={modalShow} 
-                        onHide={handleClose}
-                        todos= {todo} 
-                    /> 
                     </Card>   
                 </Row>
             ))}
             </Col>
             <Col style={{margin: '10px'}}>
             <h4>Done</h4>          
-                {todoData.filter(record =>record.status === "Done").map((todo,id) => (
+                {todoData.filter(todo =>todo.status === "Done").map((todo,id) => (
                 <Row key={todo.number}>    
                     <Card>
                         <CardBody>
@@ -178,21 +152,29 @@ function Tickets() {
                                     className="btn-modal"
                                     color="success"
                                     key={todo.id}
-                                    
+                                    //onClick={()=>{getModalData(todo) }}                             
                                     >{todo.status}  
                                 </Button>
                             </CardBody>
-                            <ViewModal 
-                                show={modalShow} 
-                                onHide={handleClose}
-                                todos= {todo} 
-                            />                                
+                                                        
                     </Card>                  
                 </Row>
             ))}
             </Col>
             
             </Row>
+            {
+                modalShow && (
+                    <ViewModal 
+                    show={modalShow} 
+                    onHide={handleClose}
+                    todos= {card} 
+                />  
+
+                )
+            }
+            
+            
           
         </Container>
     )
@@ -201,3 +183,4 @@ function Tickets() {
 
 
 export default Tickets;
+//() => getModalData({todo,id})
