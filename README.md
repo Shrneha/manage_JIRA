@@ -27,20 +27,19 @@ Add a button to re-fetch or re-load new tickets if any from Jira and put them in
 <h2>Screen Shots:</h2>
 
 1. Home Page
-
-<img width="1440" alt="Screenshot 2023-05-25 at 5 24 30 PM" src="https://github.com/Shrneha/manage_JIRA/assets/51981339/93017def-dd3c-4d23-b725-b258b6fe0808">
+<img width="1440" alt="Screenshot 2023-05-31 at 12 11 57 PM" src="https://github.com/Shrneha/manage_JIRA/assets/51981339/f02889e2-f7f9-400d-b198-980689138d36">
 
 
 2. Change the status of the ticket from 'Open' to 'Close' with a comment in Jira using API.
 
-<img width="1438" alt="Screenshot 2023-05-25 at 5 28 57 PM" src="https://github.com/Shrneha/manage_JIRA/assets/51981339/fefc787f-4073-4a69-ba6c-df87b2a43f4c">
+<img width="1440" alt="Screenshot 2023-05-31 at 12 13 50 PM" src="https://github.com/Shrneha/manage_JIRA/assets/51981339/d8a65ec3-e2b9-4327-af8c-20131635691e">
 
 
-<img width="1440" alt="Screenshot 2023-05-25 at 5 34 33 PM" src="https://github.com/Shrneha/manage_JIRA/assets/51981339/94352c05-d516-4a54-83dd-254b8617f1ea">
 
-3. After changing status, page reloads and we can see changed ticket status on board. 
+3. After changing status, page reloads and we can see changed ticket status on board. Also there is refresh button provided on the screen. 
 
-<img width="1440" alt="Screenshot 2023-05-25 at 5 36 35 PM" src="https://github.com/Shrneha/manage_JIRA/assets/51981339/c2fa22d9-9e9c-4aa2-bca0-39bcb5cf0cf5">
+<img width="1440" alt="Screenshot 2023-05-31 at 12 15 17 PM" src="https://github.com/Shrneha/manage_JIRA/assets/51981339/ca2bb2f1-965d-48d9-9ab6-5fcf9f092554">
+
 
 
 <h2>About the Stack</h2>
